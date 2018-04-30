@@ -9,10 +9,14 @@
 import UIKit
 
 class TodoListViewController: UITableViewController {
+    let defult = UserDefaults.standard
 var itemArray = ["one" ,"two", "three"]
     //MARK - TableView Datasors Methode
     override func viewDidLoad() {
         super.viewDidLoad()
+        if let items  = defult.array(forKey: "TodayListArray") as? [String] {
+            itemArray = items
+        }
         // Do any additional setup after loading the view, typically from a nib.
     }
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -48,7 +52,7 @@ var itemArray = ["one" ,"two", "three"]
 //            print(textFiled.text)
             self.itemArray.append(textFiled.text!)
             self.tableView.reloadData()
-            
+            self.defult.set(self.itemArray, forKey: "TodayListArray")
         }
         alert.addTextField { (alertTextField) in
             alertTextField.placeholder = "creat new item"
